@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/SkyBoard/static/css/main.3e6c9612.css",
-    "main.js": "/SkyBoard/static/js/main.408cb001.js",
-    "index.html": "/SkyBoard/index.html",
-    "main.3e6c9612.css.map": "/SkyBoard/static/css/main.3e6c9612.css.map",
-    "main.408cb001.js.map": "/SkyBoard/static/js/main.408cb001.js.map"
+    "main.css": "./static/css/main.3e6c9612.css",
+    "main.js": "./static/js/main.2064a905.js",
+    "index.html": "./index.html",
+    "main.3e6c9612.css.map": "./static/css/main.3e6c9612.css.map",
+    "main.2064a905.js.map": "./static/js/main.2064a905.js.map"
   },
   "entrypoints": [
     "static/css/main.3e6c9612.css",
-    "static/js/main.408cb001.js"
+    "static/js/main.2064a905.js"
   ]
 }

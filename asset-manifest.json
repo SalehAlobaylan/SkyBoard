@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/SkyBoard/static/js/main.cffb1b1e.js",
+    "index.html": "/SkyBoard/index.html",
+    "main.cffb1b1e.js.map": "/SkyBoard/static/js/main.cffb1b1e.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.cffb1b1e.js"
+  ]
+}

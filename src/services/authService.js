@@ -8,15 +8,15 @@ import User from '../models/User';
 export const login = async () => {
   try {
     const userData = await signInWithGoogle();
-    
+
     // Create or update user in Firestore
     const user = new User({
       id: userData.uid,
       displayName: userData.displayName,
       email: userData.email,
-      photoURL: userData.photoURL
+      photoURL: userData.photoURL,
     });
-    
+
     await user.save();
     return user;
   } catch (error) {
@@ -43,21 +43,23 @@ export const logout = async () => {
  * @param {Function} onAuthStateChange Callback function for auth state changes
  * @returns {Function} Unsubscribe function
  */
-export const initializeAuth = (onAuthStateChange) => {
-  return subscribeToAuthChanges(async (user) => {
+export const initializeAuth = onAuthStateChange => {
+  return subscribeToAuthChanges(async user => {
     if (user) {
       // User is signed in
-      const userModel = await User.getById(user.uid) || new User({
-        id: user.uid,
-        displayName: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL
-      });
-      
-      if (!await User.getById(user.uid)) {
+      const userModel =
+        (await User.getById(user.uid)) ||
+        new User({
+          id: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        });
+
+      if (!(await User.getById(user.uid))) {
         await userModel.save();
       }
-      
+
       onAuthStateChange(userModel);
     } else {
       // User is signed out

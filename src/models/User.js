@@ -1,5 +1,6 @@
-import { db } from '../config/firebase';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+
+import { db } from '../config/firebase';
 
 class User {
   /**
@@ -48,7 +49,7 @@ class User {
         settings: this.settings,
       };
 
-      if (!await User.getById(this.id)) {
+      if (!(await User.getById(this.id))) {
         // New user, include createdAt
         userData.createdAt = new Date();
         await setDoc(doc(db, 'users', this.id), userData);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import { fetchUserTasks, addTask, editTask, removeTask } from '../../services/taskService';
 import TaskCard from '../components/TaskCard';
 
@@ -30,11 +31,11 @@ const Dashboard = ({ user }) => {
     }
   };
 
-  const handleAddTask = async (taskData) => {
+  const handleAddTask = async taskData => {
     try {
       const newTask = await addTask({
         ...taskData,
-        userId: user.id
+        userId: user.id,
       });
       setTasks([...tasks, newTask]);
     } catch (err) {
@@ -46,14 +47,14 @@ const Dashboard = ({ user }) => {
   const handleEditTask = async (taskId, taskData) => {
     try {
       const updatedTask = await editTask(taskId, taskData);
-      setTasks(tasks.map(task => task.id === taskId ? updatedTask : task));
+      setTasks(tasks.map(task => (task.id === taskId ? updatedTask : task)));
     } catch (err) {
       setError('Failed to update task');
       console.error(err);
     }
   };
 
-  const handleDeleteTask = async (taskId) => {
+  const handleDeleteTask = async taskId => {
     try {
       await removeTask(taskId);
       setTasks(tasks.filter(task => task.id !== taskId));
@@ -64,28 +65,28 @@ const Dashboard = ({ user }) => {
   };
 
   if (loading) return <div>Loading tasks...</div>;
-  
+
   return (
     <div className="dashboard">
       <h1>Your Tasks</h1>
-      
+
       {error && <div className="error">{error}</div>}
-      
+
       <div className="task-list">
         {tasks.length === 0 ? (
           <p>No tasks found. Add your first task!</p>
         ) : (
           tasks.map(task => (
-            <TaskCard 
-              key={task.id} 
-              task={task} 
-              onEdit={(task) => handleEditTask(task.id, task)} 
-              onDelete={handleDeleteTask} 
+            <TaskCard
+              key={task.id}
+              task={task}
+              onEdit={task => handleEditTask(task.id, task)}
+              onDelete={handleDeleteTask}
             />
           ))
         )}
       </div>
-      
+
       {/* Task creation form would go here */}
     </div>
   );

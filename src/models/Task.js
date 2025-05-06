@@ -1,5 +1,6 @@
-import { db } from '../config/firebase';
 import { doc, getDoc, collection, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+
+import { db } from '../config/firebase';
 
 class Task {
   /**
@@ -79,7 +80,7 @@ class Task {
     if (!this.id) {
       throw new Error('Cannot delete task without ID');
     }
-    
+
     try {
       await deleteDoc(doc(db, 'tasks', this.id));
     } catch (error) {

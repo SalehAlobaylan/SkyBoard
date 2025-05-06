@@ -6,7 +6,7 @@ import Task from '../models/Task';
  * @param {string} userId User ID
  * @returns {Promise<Array>} List of Task objects
  */
-export const fetchUserTasks = async (userId) => {
+export const fetchUserTasks = async userId => {
   try {
     const tasksData = await getUserTasks(userId);
     return tasksData.map(task => new Task(task));
@@ -21,7 +21,7 @@ export const fetchUserTasks = async (userId) => {
  * @param {Object} taskData Task data
  * @returns {Promise<Task>} Created task
  */
-export const addTask = async (taskData) => {
+export const addTask = async taskData => {
   try {
     const task = new Task(taskData);
     await task.save();
@@ -44,14 +44,14 @@ export const editTask = async (taskId, taskData) => {
     if (!task) {
       throw new Error('Task not found');
     }
-    
+
     // Update task properties
     Object.keys(taskData).forEach(key => {
       if (key !== 'id') {
         task[key] = taskData[key];
       }
     });
-    
+
     await task.save();
     return task;
   } catch (error) {
@@ -65,7 +65,7 @@ export const editTask = async (taskId, taskData) => {
  * @param {string} taskId Task ID
  * @returns {Promise<void>}
  */
-export const removeTask = async (taskId) => {
+export const removeTask = async taskId => {
   try {
     const task = await Task.getById(taskId);
     if (task) {

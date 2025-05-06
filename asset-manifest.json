@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/SkyBoard/static/js/main.b3fb5270.js",
+    "main.js": "/SkyBoard/static/js/main.dee4b2ff.js",
     "index.html": "/SkyBoard/index.html",
-    "main.b3fb5270.js.map": "/SkyBoard/static/js/main.b3fb5270.js.map"
+    "main.dee4b2ff.js.map": "/SkyBoard/static/js/main.dee4b2ff.js.map"
   },
   "entrypoints": [
-    "static/js/main.b3fb5270.js"
+    "static/js/main.dee4b2ff.js"
   ]
 }

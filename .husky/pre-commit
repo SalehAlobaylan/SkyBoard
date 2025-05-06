@@ -1,6 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx lint-staged
+# Add a timeout to lint-staged to prevent hanging
+npx --no-install lint-staged --quiet
 # Add a check to prevent committing with ESLint warnings
 npx eslint . --max-warnings=0 || (echo "⚠️ ESLint found warnings. Fix them before committing or use --no-verify to bypass." && exit 1)

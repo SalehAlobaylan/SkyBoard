@@ -1,1 +1,0 @@
-// This file should set up and export Firebase/Firestore instances for use throughout the application.

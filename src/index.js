@@ -16,27 +16,34 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+const cors = require("cors");
+const tasksRouter = require("./routes/tasksRoutes");
+const authRouter = require("./routes/authRoutes");
 
-app.get('/test-firestore', async (req, res) => {
-  try {
-    const docRef = await db.collection('test').add({ timestamp: new Date(), msg: 'Hello Firestore!' });
-    res.json({ success: true, docId: docRef.id });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  }
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Routes
+app.use("/api/tasks", tasksRouter);
+app.use("/auth", authRouter);
+
+// Catch-all 404 for undefined routes
+app.use((req, res, next) => {
+  res.status(404).json({ message: "Not Found" });
 });
 
-// Initiate Google OAuth
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-// Google OAuth callback
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
-  (req, res) => {
-    res.send('Google OAuth successful!');
-  }
-);
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Log the error stack for debugging
+  const status = err.status || 500;
+  const message = err.message || "Something went wrong!";
+  res.status(status).json({ message });
+});
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Server is running on port ${PORT}`);
+});
+
+module.exports = app; // Export for potential testing

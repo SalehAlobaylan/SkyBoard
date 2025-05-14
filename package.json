@@ -4,7 +4,8 @@
   "description": "SkyBoard - A modern task management application",
   "main": "index.js",
   "scripts": {
-    "test": ""
+    "test": "",
+    "dev": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "express-session": "^1.18.1",
     "firebase": "^11.7.1",
     "firebase-admin": "^13.4.0",
+    "express-validator": "^7.2.1",
     "nodemon": "^3.1.10",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",

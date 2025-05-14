@@ -1,5 +1,5 @@
 // This file serves as the application entry point, bootstrapping the React application and any serverless functions.
-require('dotenv').config(); // Must be first!
+require('dotenv').config();
 const express = require('express');
 const { db } = require('./config/firebaseAdmin');
 const passport = require('./services/authService.js');

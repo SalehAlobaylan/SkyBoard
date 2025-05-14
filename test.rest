@@ -1,0 +1,78 @@
+@baseUrl = http://localhost:5000/api
+
+### Create a new task
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Finish project proposal",
+  "description": "Complete the proposal document and send for review.",
+  "dueDate": "2024-12-31T23:59:59Z",
+  "priority": "High",
+  "completed": false
+}
+
+### Create another task (minimal)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Quick reminder",
+  "priority": "Low"
+}
+
+### Get all tasks
+GET {{baseUrl}}/tasks
+
+### Get all tasks with filters (example: high priority, not completed)
+GET {{baseUrl}}/tasks?priority=High&completed=false
+
+### Get all tasks with search
+GET {{baseUrl}}/tasks?search=project
+
+### Get a specific task by ID (replace 1 with an actual ID after creating a task)
+@taskId = 1
+GET {{baseUrl}}/tasks/{{taskId}}
+
+### Update a task (replace 1 with an actual ID)
+PATCH {{baseUrl}}/tasks/{{taskId}}
+Content-Type: application/json
+
+{
+  "title": "UPDATED - Finish project proposal with edits",
+  "completed": true,
+  "priority": "Medium"
+}
+
+### Update only description of a task (replace 1 with an actual ID)
+PATCH {{baseUrl}}/tasks/{{taskId}}
+Content-Type: application/json
+
+{
+  "description": "Final review and submission completed."
+}
+
+### Delete a task (replace 1 with an actual ID)
+DELETE {{baseUrl}}/tasks/{{taskId}}
+
+### Try to get a deleted task (should be 404)
+GET {{baseUrl}}/tasks/{{taskId}}
+
+### Create a task with invalid priority (expect 400 error)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Invalid Task",
+  "priority": "Urgent"
+}
+
+### Create a task with invalid dueDate (expect 400 error)
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Bad Date Task",
+  "dueDate": "tomorrow",
+  "priority": "Medium"
+}

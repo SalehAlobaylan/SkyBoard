@@ -1,11 +1,17 @@
 import React from 'react';
 
-const TodoFilter = ({ filters }) => {
+const TodoFilter = ({ filters, onFilterChange }) => {
   return (
     <div className="todo-filters">
-
+      <input
+        type="text"
+        placeholder="Search tasks..."
+        value={filters.search}
+        onChange={(e) => onFilterChange({...filters, search: e.target.value})}
+      />
       <select
         value={filters.priority}
+        onChange={(e) => onFilterChange({...filters, priority: e.target.value})}
       >
         <option value="">All Priorities</option>
         <option value="High">High</option>
@@ -14,6 +20,7 @@ const TodoFilter = ({ filters }) => {
       </select>
       <select
         value={filters.completed}
+        onChange={(e) => onFilterChange({...filters, completed: e.target.value})}
       >
         <option value="">All Tasks</option>
         <option value="false">Active</option>

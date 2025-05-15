@@ -47,18 +47,18 @@ async function getTasks(filters = {}, userId) {
     // Always filter by userId since we know it exists
     query = query.where("userId", "==", userId);
 
-    // // Apply Firestore filters directly when possible
-    // if (filters.priority) {
-    //   query = query.where("priority", "==", filters.priority);
-    // }
+    // Apply Firestore filters directly when possible
+    if (filters.priority) {
+      query = query.where("priority", "==", filters.priority);
+    }
 
-    // if (filters.completed !== undefined) {
-    //   const completedBool = String(filters.completed).toLowerCase() === "true";
-    //   query = query.where("completed", "==", completedBool);
-    // }
+    if (filters.completed !== undefined) {
+      const completedBool = String(filters.completed).toLowerCase() === "true";
+      query = query.where("completed", "==", completedBool);
+    }
 
-    // // Sort by newest first
-    // query = query.orderBy("createdAt", "desc");
+    // Sort by newest first
+    query = query.orderBy("createdAt", "desc");
 
     const snapshot = await query.get();
     let tasks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));

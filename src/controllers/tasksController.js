@@ -2,54 +2,69 @@
 
 const taskService = require("../services/taskService");
 
+/**
+ * Create a new task
+ * POST /api/tasks
+ */
 async function createTask(req, res, next) {
   try {
-    const task = await taskService.createTask(req.body);
+    const task = await taskService.createTask(req.body, req.user.id);
     res.status(201).json(task);
   } catch (err) {
     next(err);
   }
 }
 
+/**
+ * Get all tasks with filters
+ * GET /api/tasks
+ */
 async function getTasks(req, res, next) {
   try {
-    const tasks = await taskService.getTasks(req.query);
+    const tasks = await taskService.getTasks(req.query, req.user.id);
     res.json(tasks);
   } catch (err) {
     next(err);
   }
 }
 
+/**
+ * Get a task by ID
+ * GET /api/tasks/:id
+ */
 async function getTaskById(req, res, next) {
   try {
-    const task = await taskService.getTaskById(req.params.id);
-    if (!task) {
-      return res.status(404).json({ message: "Task not found" });
-    }
+    const task = await taskService.getTaskById(req.params.id, req.user.id);
     res.json(task);
   } catch (err) {
     next(err);
   }
 }
 
+/**
+ * Update a task
+ * PATCH /api/tasks/:id
+ */
 async function updateTask(req, res, next) {
   try {
-    const updatedTask = await taskService.updateTask(req.params.id, req.body);
-    if (!updatedTask) {
-      return res.status(404).json({ message: "Task not found for update" });
-    }
+    const updatedTask = await taskService.updateTask(
+      req.params.id,
+      req.body,
+      req.user.id
+    );
     res.json(updatedTask);
   } catch (err) {
     next(err);
   }
 }
 
+/**
+ * Delete a task
+ * DELETE /api/tasks/:id
+ */
 async function deleteTask(req, res, next) {
   try {
-    const wasDeleted = await taskService.deleteTask(req.params.id);
-    if (!wasDeleted) {
-      return res.status(404).json({ message: "Task not found for deletion" });
-    }
+    await taskService.deleteTask(req.params.id, req.user.id);
     res.status(204).end(); // No content to send back
   } catch (err) {
     next(err);

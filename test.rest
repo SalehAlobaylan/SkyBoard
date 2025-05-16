@@ -1,8 +1,10 @@
 @baseUrl = http://localhost:5000/api
+@mockUserId = user123
 
 ### Create a new task
 POST {{baseUrl}}/tasks
 Content-Type: application/json
+X-User-ID: {{mockUserId}}
 
 {
   "title": "Finish project proposal",
@@ -15,6 +17,7 @@ Content-Type: application/json
 ### Create another task (minimal)
 POST {{baseUrl}}/tasks
 Content-Type: application/json
+X-User-ID: {{mockUserId}}
 
 {
   "title": "Quick reminder",
@@ -23,20 +26,25 @@ Content-Type: application/json
 
 ### Get all tasks
 GET {{baseUrl}}/tasks
+X-User-ID: {{mockUserId}}
 
 ### Get all tasks with filters (example: high priority, not completed)
 GET {{baseUrl}}/tasks?priority=High&completed=false
+X-User-ID: {{mockUserId}}
 
 ### Get all tasks with search
 GET {{baseUrl}}/tasks?search=project
+X-User-ID: {{mockUserId}}
 
-### Get a specific task by ID (replace 1 with an actual ID after creating a task)
-@taskId = 1
+### Get a specific task by ID (replace with an actual ID after creating a task)
+@taskId = pEyRw4wUE9eQQRBA7GXT
 GET {{baseUrl}}/tasks/{{taskId}}
+X-User-ID: {{mockUserId}}
 
-### Update a task (replace 1 with an actual ID)
+### Update a task (replace with an actual ID)
 PATCH {{baseUrl}}/tasks/{{taskId}}
 Content-Type: application/json
+X-User-ID: {{mockUserId}}
 
 {
   "title": "UPDATED - Finish project proposal with edits",
@@ -44,23 +52,27 @@ Content-Type: application/json
   "priority": "Medium"
 }
 
-### Update only description of a task (replace 1 with an actual ID)
+### Update only description of a task (replace with an actual ID)
 PATCH {{baseUrl}}/tasks/{{taskId}}
 Content-Type: application/json
+X-User-ID: {{mockUserId}}
 
 {
   "description": "Final review and submission completed."
 }
 
-### Delete a task (replace 1 with an actual ID)
+### Delete a task (replace with an actual ID)
 DELETE {{baseUrl}}/tasks/{{taskId}}
+X-User-ID: {{mockUserId}}
 
 ### Try to get a deleted task (should be 404)
 GET {{baseUrl}}/tasks/{{taskId}}
+X-User-ID: {{mockUserId}}
 
 ### Create a task with invalid priority (expect 400 error)
 POST {{baseUrl}}/tasks
 Content-Type: application/json
+X-User-ID: {{mockUserId}}
 
 {
   "title": "Invalid Task",
@@ -70,9 +82,14 @@ Content-Type: application/json
 ### Create a task with invalid dueDate (expect 400 error)
 POST {{baseUrl}}/tasks
 Content-Type: application/json
+X-User-ID: {{mockUserId}}
 
 {
   "title": "Bad Date Task",
   "dueDate": "tomorrow",
   "priority": "Medium"
 }
+
+### Test accessing a task from a different user (should get 403)
+GET {{baseUrl}}/tasks/{{taskId}}
+X-User-ID: differentUser456

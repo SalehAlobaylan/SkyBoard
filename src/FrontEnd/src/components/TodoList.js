@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TodoItem from './TodoItem';
 import AddTodo from './AddTodo';
 import TodoFilter from './TodoFilter';
+import '../styles/Todo.css';
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
@@ -67,7 +68,7 @@ const TodoList = () => {
 
   return (
     <div className="todo-list">
-      <h1>My Todo List</h1>
+      <h1>SkyBoard</h1>
       <AddTodo onAdd={handleAddTodo} />
       <TodoFilter filters={filters} onFilterChange={setFilters} />
       <div className="todos">

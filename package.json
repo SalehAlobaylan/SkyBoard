@@ -9,6 +9,8 @@
     "start": "node src/index.js",
     "client": "cd src/FrontEnd && npm start",
     "server": "nodemon src/index.js",
+    "mock": "nodemon src/mockServer.js",
+    "dev:mock": "concurrently \"npm run mock\" \"npm run client\"",
     "dev:full": "concurrently \"npm run server\" \"npm run client\"",
     "install:all": "npm install && cd src/FrontEnd && npm install"
   },

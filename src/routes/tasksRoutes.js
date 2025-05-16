@@ -7,6 +7,7 @@ const {
   updateTask,
   deleteTask,
 } = require("../controllers/tasksController");
+const { requireAuth } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
@@ -18,6 +19,9 @@ const handleValidationErrors = (req, res, next) => {
   }
   next();
 };
+
+// Apply authentication middleware to all task routes
+router.use(requireAuth);
 
 // POST /api/tasks
 router.post(

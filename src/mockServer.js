@@ -7,6 +7,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Middleware to check for user authentication
+app.use((req, res, next) => {
+  // Accept either Authorization header or X-User-ID header for mock authentication
+  const userId = req.headers['x-user-id'] || 'user123';
+  req.user = { id: userId };
+  next();
+});
+
 // In-memory storage for tasks
 let tasks = [
   {
@@ -50,7 +58,8 @@ app.get('/health', (req, res) => {
 app.get('/api/tasks', (req, res) => {
   const { search, priority, completed } = req.query;
   
-  let filteredTasks = [...tasks];
+  // Filter by user ID
+  let filteredTasks = tasks.filter(task => task.userId === req.user.id);
   
   // Apply filters
   if (search) {
@@ -75,7 +84,7 @@ app.get('/api/tasks', (req, res) => {
 
 // GET /api/tasks/:id
 app.get('/api/tasks/:id', (req, res) => {
-  const task = tasks.find(t => t.id === req.params.id);
+  const task = tasks.find(t => t.id === req.params.id && t.userId === req.user.id);
   
   if (!task) {
     return res.status(404).json({ message: 'Task not found' });
@@ -89,7 +98,7 @@ app.post('/api/tasks', (req, res) => {
   const newTask = {
     id: Date.now().toString(),
     ...req.body,
-    userId: 'user123', // Mock user ID
+    userId: req.user.id,
     completed: req.body.completed || false,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
@@ -101,7 +110,7 @@ app.post('/api/tasks', (req, res) => {
 
 // PATCH /api/tasks/:id
 app.patch('/api/tasks/:id', (req, res) => {
-  const taskIndex = tasks.findIndex(t => t.id === req.params.id);
+  const taskIndex = tasks.findIndex(t => t.id === req.params.id && t.userId === req.user.id);
   
   if (taskIndex === -1) {
     return res.status(404).json({ message: 'Task not found' });
@@ -119,7 +128,7 @@ app.patch('/api/tasks/:id', (req, res) => {
 
 // DELETE /api/tasks/:id
 app.delete('/api/tasks/:id', (req, res) => {
-  const taskIndex = tasks.findIndex(t => t.id === req.params.id);
+  const taskIndex = tasks.findIndex(t => t.id === req.params.id && t.userId === req.user.id);
   
   if (taskIndex === -1) {
     return res.status(404).json({ message: 'Task not found' });
@@ -134,7 +143,7 @@ app.get('/api/auth/status', (req, res) => {
   res.json({ 
     authenticated: true, 
     user: {
-      id: 'user123',
+      id: req.user.id,
       displayName: 'Test User',
       email: 'test@example.com'
     }

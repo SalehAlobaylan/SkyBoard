@@ -2,20 +2,18 @@ import React, { useState } from 'react';
 
 const AddTodo = ({ onAdd }) => {
   const [title, setTitle] = useState('');
-  const [priority, setPriority] = useState('medium');
+  const [priority, setPriority] = useState('Medium');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title.trim()) return;
-
     onAdd({
       title: title.trim(),
-      priority,
+      priority: priority || 'Medium',
       completed: false
     });
-
     setTitle('');
-    setPriority('medium');
+    setPriority('Medium');
   };
 
   return (
@@ -32,9 +30,9 @@ const AddTodo = ({ onAdd }) => {
         onChange={(e) => setPriority(e.target.value)}
         className="priority-select"
       >
-        <option value="low">Low Priority</option>
-        <option value="medium">Medium Priority</option>
-        <option value="high">High Priority</option>
+        <option value="High">High Priority</option>
+        <option value="Medium">Medium Priority</option>
+        <option value="Low">Low Priority</option>
       </select>
       <button type="submit" className="add-btn">
         Add Todo

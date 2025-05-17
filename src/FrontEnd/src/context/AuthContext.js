@@ -14,6 +14,18 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        if (!user.getIdToken) {
+          user.getIdToken = async () => {
+            try {
+              return await auth.currentUser.getIdToken(true);
+            } catch (error) {
+              console.error('Error getting token:', error);
+              return '';
+            }
+          };
+        }
+      }
       setCurrentUser(user);
       setLoading(false);
     });
@@ -29,10 +41,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const getToken = async () => {
+    if (currentUser && currentUser.getIdToken) {
+      try {
+        return await currentUser.getIdToken(true);
+      } catch (error) {
+        console.error('Error getting token:', error);
+      }
+    }
+    return '';
+  };
+
   const value = {
     currentUser,
     logout,
-    loading
+    loading,
+    getToken
   };
 
   return (

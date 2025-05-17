@@ -21,7 +21,7 @@ const TodoItem = ({ todo, onUpdate, onDelete }) => {
           checked={todo.completed}
           onChange={handleToggleComplete}
         />
-        <span className="todo-title">{todo.title}</span>
+        <span className="todo-title">{todo.title || 'Untitled'}</span>
         <div className="todo-meta">
           <select
             value={todo.priority}

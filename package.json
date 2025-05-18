@@ -9,6 +9,8 @@
     "start": "node src/index.js",
     "client": "cd src/FrontEnd && npm start",
     "server": "nodemon src/index.js",
+    "mock": "nodemon src/mockServer.js",
+    "dev:mock": "concurrently \"npm run mock\" \"npm run client\"",
     "dev:full": "concurrently \"npm run server\" \"npm run client\"",
     "install:all": "npm install && cd src/FrontEnd && npm install"
   },
@@ -41,8 +43,8 @@
     "nodemon": "^3.1.10",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^7.5.3",
     "concurrently": "^8.2.2"
   }

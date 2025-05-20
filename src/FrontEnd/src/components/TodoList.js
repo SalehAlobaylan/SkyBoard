@@ -18,7 +18,11 @@ const TodoList = () => {
   const fetchTodos = useCallback(async () => {
     try {
       setError(null);
-      const queryParams = new URLSearchParams(filters).toString();
+      // Create a new object without undefined values
+      const validFilters = Object.fromEntries(
+        Object.entries(filters).filter(([_, value]) => value !== undefined)
+      );
+      const queryParams = new URLSearchParams(validFilters).toString();
       const token = await getToken();
       
       const response = await fetch(`/api/tasks?${queryParams}`, {

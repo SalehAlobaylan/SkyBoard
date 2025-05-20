@@ -20,6 +20,26 @@ const handleValidationErrors = (req, res, next) => {
   next();
 };
 
+// Helper to convert string to boolean
+const convertToBoolean = (value) => {
+  if (value === undefined || value === null || value === '') {
+    return undefined;
+  }
+  if (typeof value === 'boolean') {
+    return value;
+  }
+  if (typeof value === 'string') {
+    const normalized = value.toLowerCase().trim();
+    if (normalized === 'true' || normalized === '1' || normalized === 'yes') {
+      return true;
+    }
+    if (normalized === 'false' || normalized === '0' || normalized === 'no') {
+      return false;
+    }
+  }
+  return undefined;
+};
+
 // Apply authentication middleware to all task routes
 router.use(requireAuth);
 
@@ -58,13 +78,29 @@ router.get(
     query("search").optional().isString(),
     query("priority")
       .optional()
-      .isIn(["High", "Medium", "Low"])
+      .isIn(["High", "Medium", "Low", ""])
       .withMessage("Priority must be one of High, Medium, or Low."),
     query("completed")
       .optional()
-      .isBoolean()
-      .withMessage("Completed must be a boolean."),
+      .custom((value) => {
+        // Allow undefined, empty string, or valid boolean strings
+        if (value === undefined || value === '') {
+          return true;
+        }
+        const boolValue = convertToBoolean(value);
+        if (boolValue === undefined && value !== undefined) {
+          throw new Error("Completed must be a boolean value (true/false)");
+        }
+        return true;
+      }),
   ],
+  (req, res, next) => {
+    // Convert completed to proper boolean if present
+    if (req.query.completed !== undefined) {
+      req.query.completed = convertToBoolean(req.query.completed);
+    }
+    next();
+  },
   handleValidationErrors,
   getTasks
 );

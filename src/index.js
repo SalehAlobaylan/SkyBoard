@@ -1,6 +1,9 @@
 // This file serves as the application entry point
 require('dotenv').config();
 
+// Set NODE_ENV to development by default if not set
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 // Import required packages
 const express = require('express');
 const cors = require('cors');

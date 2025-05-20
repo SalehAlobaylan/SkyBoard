@@ -21,7 +21,22 @@ async function createTask(req, res, next) {
  */
 async function getTasks(req, res, next) {
   try {
-    const tasks = await taskService.getTasks(req.query, req.user.id);
+    // Process query params, removing empty strings
+    const filters = {};
+    
+    if (req.query.search) {
+      filters.search = req.query.search;
+    }
+    
+    if (req.query.priority) {
+      filters.priority = req.query.priority;
+    }
+    
+    if (req.query.completed !== undefined) {
+      filters.completed = req.query.completed;
+    }
+    
+    const tasks = await taskService.getTasks(filters, req.user.id);
     res.json(tasks);
   } catch (err) {
     next(err);

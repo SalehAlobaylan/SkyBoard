@@ -1,4 +1,17 @@
-﻿# SkyBoard
+﻿[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![Firebase](https://img.shields.io/badge/Firestore-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/docs/firestore)
+[![OAuth](https://img.shields.io/badge/OAuth-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://oauth.net/2/)
+
+
+Quick Run the application (zip version):
+
+```
+npm run dev:full
+```
+
+# SkyBoard
 
 SkyBoard is a modern task management application built with React and Express.
 
@@ -10,11 +23,6 @@ The application consists of:
 - Backend: Express.js API with Firebase Firestore database
 
 ## Getting Started
-
-### Prerequisites
-
-- Node.js (v14 or later)
-- npm (v6 or later)
 
 ### Installation
 
@@ -33,20 +41,7 @@ npm run install:all
 
 ### Running the Application
 
-#### Option 1: Run with Mock Backend (No Firebase Required)
-
-This option uses an in-memory mock server that doesn't require Firebase credentials.
-
-```
-npm run dev:mock
-```
-
-This will start:
-
-- Mock backend server at http://localhost:5000
-- React frontend at http://localhost:3000
-
-#### Option 2: Run with Real Backend
+#### Option 1: Run with Real Backend
 
 If you have Firebase credentials configured:
 
@@ -64,6 +59,20 @@ NODE_ENV=development
 npm run dev:full
 ```
 
+#### Option 2: Run with Mock Backend (No Firebase Required)
+
+This option uses an in-memory mock server that doesn't require Firebase credentials.
+
+```
+npm run dev:mock
+```
+
+This will start:
+
+- Mock backend server at http://localhost:5000
+- React frontend at http://localhost:3000
+
+
 ## Troubleshooting
 
 If you're experiencing "Proxy error" messages, it means the frontend is running but can't connect to the backend. Make sure to:
@@ -72,8 +81,3 @@ If you're experiencing "Proxy error" messages, it means the frontend is running 
 2. Check that the server is running on port 5000
 3. Verify there are no conflicts with other applications using the same port
 
-[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
-[![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![Firebase](https://img.shields.io/badge/Firestore-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/docs/firestore)
-[![OAuth](https://img.shields.io/badge/OAuth-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://oauth.net/2/)
